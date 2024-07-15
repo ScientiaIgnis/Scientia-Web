@@ -36,17 +36,20 @@ class ApiController extends Controller
             'top_n' => 'required|integer'
         ]);
 
+        $fileContent = file_get_contents($request->file('file')->getRealPath());
+
         return view(
             'app',
             [
                 'result' => Http::attach(
                     'file',
-                    file_get_contents($request->file('file')->getRealPath()),
+                    $fileContent,
                     'file'
                 )->post(env("SCIENTIA_API_URL") . '/find_similar_pdf', [
                     'top_n' => $request->input('top_n')
                 ])->json(),
-                'checked' => 'pdf'
+                'checked' => 'pdf',
+                'base64File' => base64_encode($fileContent),
             ],
         );
     }

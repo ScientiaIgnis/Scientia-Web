@@ -45,6 +45,9 @@
         <div class="tab-content bg-base-100 border-base-300 rounded-box p-5" role="tabpanel">
             <form class="grid grid-cols-1 gap-5" action="search" method="POST" enctype="multipart/form-data"
                 autocomplete="off">
+                @if (isset($base64File))
+                    <iframe class="w-full aspect-[4/1]" src="data:application/pdf;base64,{{ $base64File }}"></iframe>
+                @endif
                 @csrf
                 <label class="form-control">
                     <input class="file-input file-input-bordered @error('file') file-input-error @enderror"
